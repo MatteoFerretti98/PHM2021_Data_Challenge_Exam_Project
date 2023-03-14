@@ -84,7 +84,7 @@ def plot_wcss_and_apply_kMeans(wcss,scores_pca):
     return kmeans_pca
 
 def concat_df(original_df,scores_pca,kmeans_pca):
-    df_segm_pca_kmeans = pd.concat([original_df.reset_index(drop=True),pd.DataFrame(scores_pca)],axis=1)
+    df_segm_pca_kmeans = pd.concat([original_df,pd.DataFrame(scores_pca)],axis=1)
     df_segm_pca_kmeans.columns.values[-abs(scores_pca.shape[1]):] = ["C-" + str(s+1) for s in create_dict(scores_pca.shape[1]).keys()]
     df_segm_pca_kmeans['Segm K-means PCA'] = kmeans_pca.labels_
     df_segm_pca_kmeans['Segment'] = df_segm_pca_kmeans['Segm K-means PCA'].map(create_dict(len(kmeans_pca.labels_)))
